@@ -121,8 +121,8 @@
         // =====================================
         // MEMBACA DATA REALTIME DARI FIREBASE
         // =====================================
-        // Path disesuaikan menjadi 'Vibrasi' sesuai instruksi pengiriman updateNode() di ESP32
-        const bearingRef = ref(db, 'Vibrasi');
+        // DISESUAIKAN PERSIS dengan program ESP32 Anda: "bearing_monitor/vibration"
+        const bearingRef = ref(db, 'bearing_monitor/vibration');
 
         onValue(bearingRef, (snapshot) => {
             const data = snapshot.val();
@@ -130,12 +130,12 @@
                 const now = new Date();
                 const timeString = now.toLocaleTimeString('id-ID');
 
-                // Mengambil key yang dikirimkan oleh struct JSON ESP32 Anda
-                const totalRMS = data.totalRMS !== undefined ? data.totalRMS : 0;
+                // Mengambil data sesuai dengan json.set() pada ESP32 Anda
+                const totalRMS = data.total_rms !== undefined ? data.total_rms : 0;
                 const rmsX = data.rms_x !== undefined ? data.rms_x : 0; 
                 const rmsY = data.rms_y !== undefined ? data.rms_y : 0;
                 const rmsZ = data.rms_z !== undefined ? data.rms_z : 0;
-                const statusMotor = data.kondisi || "UNKNOWN";
+                const statusMotor = data.status || "UNKNOWN";
 
                 // 1. Update UI Angka & Status Card
                 document.getElementById('val-rms').innerText = totalRMS.toFixed(3);
